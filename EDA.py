@@ -9,6 +9,28 @@ import matplotlib
 import matplotlib.pyplot as plt
 import matplotlib.ticker
 
+def file_to_df(file_):
+    """
+    ---What it does---
+        + Generates a dataframe from a files: ".csv", ".xlsx" or ".xls".
+    ---What it needs---
+        + file: dataframe with columns.
+
+    IMPORTANT! the files need to be stored in the path specified by the function.    
+    ---What it returns---
+        + new_df: dataframe containing the data from the file.
+    """
+    path = "C:\\Users\\34609\\Documents\\Repos Git\\Data\\"
+    
+    if file_.endswith("csv"):
+        name = str(path + file_)
+        new_df = pd.read_csv(name)
+        return new_df
+    elif file_.endswith("xlsx") or file_.endswith("xls"): 
+        name = str(path + file_)
+        new_df = pd.read_excel(name)
+        return new_df
+
 def country_df_generator(df, condition_1, condition_2):
     """
     ---What it does---
