@@ -31,21 +31,37 @@ def file_to_df(file_):
         new_df = pd.read_excel(name)
         return new_df
 
-def country_df_generator(df, condition_1, condition_2):
+def country_google_generator(df, condition_1, condition_2):
     """
     ---What it does---
         + Generates a dataframe by country and date.
     ---What it needs---
         + df: dataframe with columns.
         + condition_1: name of the country.
-        + condition_2: starting date.
+        + condition_2: starting date (yy).
     ---What it returns---
         + country_df
     """
     new_df = df[df["country"] == condition_1]
     new_df.drop(["country"], axis = 1, inplace = True)
-    new_df.drop(new_df[new_df["date"] < condition_2].index, inplace = True)
+    new_df.drop(new_df[new_df["date"] <= condition_2].index, inplace = True)
     new_df.reset_index(drop = True, inplace = True)
+    return new_df
+
+def country_covid_generator(df, condition_1):
+    """
+    ---What it does---
+        + Generates a dataframe by country and date.
+    ---What it needs---
+        + df: dataframe with columns.
+        + condition_1: name of the country.
+    ---What it returns---
+        + country_df
+    """
+    new_df = df[df["country"] == condition_1]
+    new_df.drop(["country"], axis = 1, inplace = True)
+    new_df["week"] = range(8, len(df) + 8)
+    new_df.set_index('week', inplace = True)
     return new_df 
 
 def df_weekly_generation(df):
